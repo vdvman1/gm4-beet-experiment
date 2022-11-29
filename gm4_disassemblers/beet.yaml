@@ -6,8 +6,10 @@ version: '1.0.0'
 description: Break apart gold and iron tools and weapons for materials. Attach this to a mobfarm to finally make use of those extra armour sets!
 
 data_pack:
-  name: gm4_disassemblers
   load: .
 
 pipeline:
   - gm4_disassemblers.generate_loot
+  - smithed_libraries.actionbar
+  - data_pack:
+      load: '../lib_forceload'
