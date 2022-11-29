@@ -4,3 +4,6 @@ id: gm4_bat_grenades
 name: Bat Grenades
 version: '1.0.0'
 description: Tired of the uselessness of bats? This module will turn them into tiny furry flying balls of boom!
+
+data_pack:
+  load: .
