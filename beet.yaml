@@ -1,3 +1,5 @@
-broadcast: 'gm4_*/*'
-
-output: out
+pipeline:
+  - broadcast: 'gm4_*/*'
+    extend: '../beet.yaml'
+    output: '../../out'
+  - gm4

@@ -1,7 +1,3 @@
-require:
-  - smithed_libraries.plugins.misc.display_broadcasted_pack
-  - smithed_libraries.plugins.manifest.collect_version
-
 pipeline:
   - smithed_libraries.plugins.versioning
 
