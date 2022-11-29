@@ -2,6 +2,7 @@ pipeline:
   - smithed_libraries.plugins.versioning
 
 data_pack:
+  load: "gm4_*"
   name: "{{ project_id }}_1.19"
   description:
     - "{{ project_name }}"
