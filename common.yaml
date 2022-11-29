@@ -1,0 +1,23 @@
+require:
+  - smithed_libraries.plugins.misc.display_broadcasted_pack
+  - smithed_libraries.plugins.manifest.collect_version
+
+pipeline:
+  - smithed_libraries.plugins.versioning
+
+meta:
+  smithed:
+    versioning:
+      scheduled_paths:
+        - main
+        - tick
+
+      lantern_load:
+        step: load
+        tag_path: load
+        function_path: load
+
+      refactor:
+        match: "{{ project_id }}:"
+        find: "{{ project_id }}:"
+        replace: "{{ project_id }}-{{ version}}:"

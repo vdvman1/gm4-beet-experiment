@@ -1,0 +1,10 @@
+extend: '../common.yaml'
+
+id: gm4_disassemblers
+name: Disassemblers
+version: '1.0.0'
+description: Break apart gold and iron tools and weapons for materials. Attach this to a mobfarm to finally make use of those extra armour sets!
+
+data_pack:
+  name: Disassemblers
+  load: .

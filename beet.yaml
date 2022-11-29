@@ -1,0 +1,3 @@
+broadcast: 'gm4_*/*'
+
+output: out
