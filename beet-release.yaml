@@ -1,0 +1,11 @@
+pipeline:
+  - plugins.pre
+  - plugins.create_manifest
+  - broadcast: 'gm4_*'
+    extend: 'beet.yaml'
+    pipeline:
+      - plugins.output_release
+
+meta:
+  autosave:
+    link: false

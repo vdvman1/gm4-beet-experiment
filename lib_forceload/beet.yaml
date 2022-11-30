@@ -1,12 +1,7 @@
-extend: '../common.yaml'
+extend: '../library.yaml'
 
 id: gm4_forceload
 name: Gamemode 4 Forceload
-version: '1.0.0'
 
 data_pack:
-  name: lib_forceload
   load: .
-
-pipeline:
-  - gm4_disassemblers.generate_loot

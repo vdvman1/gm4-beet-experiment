@@ -1,5 +1,5 @@
 pipeline:
+  - plugins.pre
   - broadcast: 'gm4_*'
     extend: 'beet.yaml'
     output: '../out'
-  - gm4
