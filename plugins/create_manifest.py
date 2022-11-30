@@ -76,6 +76,7 @@ def beet_default(ctx: Context):
 	}
 	ctx.cache["gm4_manifest"].json = new_manifest
 
+	os.makedirs(f'{RELEASE}/{version}', exist_ok=True)
 	with open(f'{RELEASE}/{version}/meta.json', 'w') as f:
 		json.dump(new_manifest, f, indent=2)
 		f.write('\n')
