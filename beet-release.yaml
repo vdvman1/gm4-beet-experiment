@@ -7,5 +7,7 @@ pipeline:
       - plugins.output_release
 
 meta:
+  gm4_manifest:
+    save_directory: release
   autosave:
     link: false

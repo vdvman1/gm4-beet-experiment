@@ -5,3 +5,6 @@ data_pack:
     - "\n"
     - text: "Gamemode 4 for 1.19"
       color": "#4AA0C7"
+
+pipeline:
+  - plugins.populate_credits

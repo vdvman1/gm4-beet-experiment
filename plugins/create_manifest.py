@@ -5,10 +5,6 @@ import os
 import subprocess
 import yaml
 
-BASE = "base"
-OUTPUT = "out"
-RELEASE = "release"
-
 
 def run(cmd: list[str]) -> str:
 	return subprocess.run(cmd, capture_output=True, encoding="utf8").stdout.strip()
@@ -18,6 +14,7 @@ def beet_default(ctx: Context):
 	version = os.getenv("VERSION", "1.19")
 	prefix = int(os.getenv("PATCH_PREFIX", 0))
 	pr_base = ctx.meta.get('pull_request_base', None)
+	save_directory = ctx.meta.get("gm4_manifest", {}).get("save_directory", None)
 
 	modules: list[dict[str, Any]] = [{"id": p.name} for p in sorted(ctx.directory.glob("gm4_*"))]
 
@@ -32,7 +29,7 @@ def beet_default(ctx: Context):
 			module["id"] = None
 
 	try:
-		with open(f"{RELEASE}/{version}/meta.json", "r") as f:
+		with open(f"{save_directory}/{version}/meta.json", "r") as f:
 			manifest: Any = json.load(f)
 	except:
 		manifest = {
@@ -76,8 +73,9 @@ def beet_default(ctx: Context):
 	}
 	ctx.cache["gm4_manifest"].json = new_manifest
 
-	os.makedirs(f'{RELEASE}/{version}', exist_ok=True)
-	with open(f'{RELEASE}/{version}/meta.json', 'w') as f:
-		json.dump(new_manifest, f, indent=2)
-		f.write('\n')
+	if save_directory is not None:
+		os.makedirs(f'{save_directory}/{version}', exist_ok=True)
+		with open(f'{save_directory}/{version}/meta.json', 'w') as f:
+			json.dump(new_manifest, f, indent=2)
+			f.write('\n')
 	
