@@ -76,15 +76,13 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: 'Modules for pull request #${{ github.event.number }}'
-          path: ${{ github.workspace }}/out/
+          path: ${{ github.workspace }}/release/{{ env.VERSION }}/
 
       - name: Commit release
         if: github.event_name != 'pull_request'
         run: |
           git config --global user.email "${{ github.event.head_commit.author.email }}"
           git config --global user.name "${{ github.event.head_commit.author.username }}"
-          mkdir -p release/$VERSION
-          mv -f out/* release/$VERSION
           cd release
           git add .
           git commit -m "🚀 ${{ github.event.after }} $COMMIT_MSG"
