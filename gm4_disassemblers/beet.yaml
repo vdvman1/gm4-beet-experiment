@@ -3,6 +3,9 @@ extend: '../module.yaml'
 id: gm4_disassemblers
 name: Disassemblers
 
+require:
+  - bolt
+
 data_pack:
   load: .
 
@@ -10,6 +13,7 @@ pipeline:
   - gm4_disassemblers.generate_loot
   - data_pack:
       load: '../lib_forceload'
+  - mecha
 
 meta:
   gm4:

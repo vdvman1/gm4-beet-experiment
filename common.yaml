@@ -8,3 +8,7 @@ data_pack:
 
 pipeline:
   - plugins.populate_credits
+
+meta:
+  mecha:
+    formatting: minify

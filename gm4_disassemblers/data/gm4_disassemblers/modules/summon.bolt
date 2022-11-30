@@ -1,0 +1,79 @@
+from base.helpers import translate_fallback_str, resource_fallback
+from nbtlib import Byte, Float
+
+
+def dynamic_shift(name):
+    return [
+        {**name, "font": "gm4:half_scale"},
+        {**name, "font": "gm4:inverted"},
+        {**name, "font": "gm4:inverted_spacing"},
+    ]
+
+
+def unshift_name_and_show_gui(name):
+    return [
+        *dynamic_shift(name),
+        {**name, "font": "gm4:offscreen"},
+        {
+            "translate": "gui.gm4.disassembler",
+            "font": "gm4:container_gui",
+            "color": "white",
+        },
+        *dynamic_shift(name),
+        {**name, "font": "minecraft:default", "color": "#373737"},
+    ]
+
+
+def name_and_gui(name):
+    return resource_fallback(
+        {
+            **name,
+            "font": "minecraft:default",
+            "color": "#373737",
+        },
+        unshift_name_and_show_gui(name)
+    )
+
+
+block_name = translate_fallback_str(
+    name_and_gui({"text": "Disassembler"}),
+    name_and_gui({"translate": "container.gm4.disassembler"}),
+)
+
+horizontal_cmd = 3420005
+
+directions = {
+  up:    { rot: Float(0),   cmd: 3420001 },
+  down:  { rot: Float(180), cmd: 3420006 },
+  north: { rot: Float(180), cmd: horizontal_cmd },
+  east:  { rot: Float(-90), cmd: horizontal_cmd },
+  south: { rot: Float(0),   cmd: horizontal_cmd },
+  west:  { rot: Float(90),  cmd: horizontal_cmd },
+}
+
+directions_from_rotations = ["down","up","south","west","north","east"]
+
+def place_block(direction):
+    setblock ~ ~ ~ dropper[facing=direction]{CustomName:block_name}
+
+stand_common_tags = ["gm4_no_edit","gm4_disassembler_stand","gm4_machine_stand","smithed.entity","smithed.strict"]
+stand_common_nbt = {Silent:1,DisabledSlots:4144959,Tags:stand_common_tags,HasVisualFire:1,CustomName:'"gm4_disassembler_stand"'}
+new_stand_common_tags = [*stand_common_tags, "gm4_new_machine"]
+
+def summon_stand(direction="up"):
+    direction = directions[direction]
+    nbt = {
+        Small:1,NoGravity:1,Marker:1,Invulnerable:1,Invisible:1,
+        **stand_common_nbt,
+        ArmorItems:[{},{},{},{id:"minecraft:tnt",Count:Byte(1),tag:{CustomModelData:direction.cmd}}],
+        Rotation:[direction.rot,Float(0)]
+    }
+    nbt["Tags"] = new_stand_common_tags
+    summon armor_stand ~ ~-0.4 ~ nbt
+
+def summon_marker(direction="up", new_machine = True, offset = 0):
+    tags = ["gm4_disassembler","gm4_machine_marker","smithed.block","smithed.entity","smithed.strict"]
+    if new_machine:
+        tags.append("gm4_new_machine")
+    
+    summon marker ~offset ~offset ~offset {Tags:tags,CustomName:'"gm4_disassembler"',Rotation:[directions[direction].rot,0.0f]}
